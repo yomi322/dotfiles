@@ -1,0 +1,30 @@
+[core]
+	editor = vim
+	pager = less
+[user]
+	name = YASAKA Yomi
+	email = yomi322@gmail.com
+[color]
+	ui = auto
+[merge]
+	ff = false
+[push]
+	default = simple
+[pull]
+	rebase = true
+[alias]
+	a = add
+	ap = add --patch
+	b = branch
+	ci = commit -v
+	cia = commit -av
+	co = checkout
+	d = diff --patience
+	dc = diff --cached --patience
+	ds = diff --stat
+	l = log -n10 --oneline --decorate
+	ll = log --stat --pretty=fuller
+	s = status --short --branch --untracked-file=all
+[url "git@github.com:"]
+	pushinsteadof = "git://github.com/"
+	pushinsteadof = "https://github.com/"
