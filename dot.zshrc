@@ -13,10 +13,8 @@ WORDCHARS=${WORDCHARS:s,/,,}
 
 autoload -Uz promptinit
 promptinit
-prompt off
-if [ -n "${DOCKER_CONTAINER}" ]; then
-  PROMPT="(${DOCKER_CONTAINER})%# "
-fi
+PROMPT='%(?..%B%F{red}[%?]%f%b)%n@%m%# '
+RPROMPT='%F{green}%~%f'
 
 autoload -Uz compinit
 compinit
