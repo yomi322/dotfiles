@@ -6,10 +6,23 @@ export EDITOR=vim
 typeset -U path
 path=(${HOME}/.opam/system/bin(N-/) ${HOME}/.cabal/bin(N-/) ${HOME}/bin(N-/) ${path})
 
-HISTFILE=~/.zsh_history
+setopt ignore_eof no_flow_control no_beep
+
+setopt auto_cd auto_pushd pushd_ignore_dups
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwc:*' recent-dirs-default true
+
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /=;@:{},|"
+zstyle ':zle:*' word-style unspecified
+
+setopt share_history
+HISTFILE=${HOME}/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
-WORDCHARS=${WORDCHARS:s,/,,}
 
 autoload -Uz promptinit
 promptinit
@@ -35,8 +48,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-bindkey -e
-
 alias ,.='source ~/.zshrc'
 alias ,,='vim ~/.zshrc'
 alias ls='ls -F --color=auto'
@@ -60,3 +71,11 @@ alias -g V='| vim -R -'
 function mkcd() { mkdir -p "$1" && cd "$1"; }
 function passwd-gen() { cat /dev/urandom | tr -dc '[:alnum:]' | fold -b ${1:-8} | head -n10; }
 function macaddr-gen() { printf '52:54:00:%02x:%02x:%02x\n' $((RANDOM & 0xff)) $((RANDOM & 0xff)) $((RANDOM & 0xff)); }
+
+bindkey -e
+bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^s' history-incremental-pattern-search-forward
+
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+bindkey '^o' history-beginning-search-backward-end
