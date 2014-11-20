@@ -6,7 +6,7 @@ export EDITOR=vim
 typeset -U path
 path=(${HOME}/.opam/system/bin(N-/) ${HOME}/.cabal/bin(N-/) ${HOME}/bin(N-/) ${path})
 
-setopt ignore_eof no_flow_control no_beep
+setopt no_flow_control no_beep
 
 setopt auto_cd auto_pushd pushd_ignore_dups
 autoload -Uz add-zsh-hook
