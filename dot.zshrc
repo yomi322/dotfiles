@@ -72,6 +72,7 @@ function mkcd() { mkdir -p "$1" && cd "$1"; }
 function passwd-gen() { cat /dev/urandom | tr -dc '[:alnum:]' | fold -b${1:-8} | head -n10; }
 function macaddr-gen() { printf '52:54:00:%02x:%02x:%02x\n' $((RANDOM & 0xff)) $((RANDOM & 0xff)) $((RANDOM & 0xff)); }
 function docker-rm-all() { docker rm $(docker ps -aq); docker rmi $(docker images -aq); }
+function docker-ssh() { ssh $(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $1); }
 
 bindkey -e
 bindkey '^r' history-incremental-pattern-search-backward
