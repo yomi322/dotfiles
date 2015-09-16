@@ -19,7 +19,7 @@ select-word-style default
 zstyle ':zle:*' word-chars " /=;@:{},|"
 zstyle ':zle:*' word-style unspecified
 
-setopt share_history
+setopt no_share_history
 HISTFILE=${HOME}/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
