@@ -61,11 +61,12 @@ AutoCmd QuickFixCmdPost lvimgrep lopen
 
 AutoCmd BufNewFile,BufRead *.md setlocal filetype=markdown
 AutoCmd FileType * setlocal nofoldenable
-AutoCmd FileType c setlocal noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
+AutoCmd FileType c,cpp setlocal noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 AutoCmd FileType haskell setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
+AutoCmd FileType text setlocal wrap noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
+AutoCmd FileType vim setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
 AutoCmd FileType help call s:ft_help()
 AutoCmd FileType qf call s:ft_qf()
-AutoCmd FileType text setlocal wrap noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
 
 function! s:ft_help()
   if &l:buftype ==# 'help'
