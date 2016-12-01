@@ -15,16 +15,16 @@
 [alias]
 	a = add
 	ap = add --patch
+	au = add --update
 	b = branch
 	ci = commit -v
-	cia = commit -av
 	co = checkout
-	d = diff --patience
-	dc = diff --cached --patience
+	d = diff --patience --ignore-space-change
+	dc = diff --cached --patience --ignore-space-change
 	ds = diff --stat
 	l = log -n10 --oneline --decorate
 	ll = log --stat --pretty=fuller
-	s = status --short --branch --untracked-file=all
+	s = status --short --branch
 [url "git@github.com:"]
 	pushinsteadof = "git://github.com/"
 	pushinsteadof = "https://github.com/"
