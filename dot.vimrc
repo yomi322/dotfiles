@@ -33,31 +33,6 @@ function! StatusLine()
   return '%m%r%y %f (%{&fileencoding},%{&fileformat})%=%l/%4L,%3c'
 endfunction
 
-command! -nargs=1 -bang -bar -complete=file Rename saveas<bang> <args> | call delete(expand('#'))
-
-command! -bar DeleteTrailingSpace call s:delete_trailing_space()
-function! s:delete_trailing_space()
-  let save_cursor = getpos('.')
-  %s/\s\+$//e
-  call setpos('.', save_cursor)
-endfunction
-
-command! -nargs=? -bang -complete=customlist,s:set_indent_rule_complete SetIndentRule
-  \ call s:set_indent_rule(<bang>0, <q-args>)
-let s:indent_rules = map([ [ 0, 8 ], [ 0, 4 ], [ 0, 2 ], [ 1, 8 ], [ 1, 4 ], [ 1, 2 ] ],
-  \ 'join([ (v:val[0] ? "no" : "  ") . "et", "ts=" . v:val[1], "sts=" . v:val[1], "sw=" . v:val[1] ])')
-let s:indent_rules_list = map(copy(s:indent_rules), '"  " . index(s:indent_rules, v:val) . "  " . v:val')
-call add(s:indent_rules_list, repeat(' ', (winwidth(0) + 1) / 2))
-function! s:set_indent_rule_complete(a, l, p)
-  return s:indent_rules_list
-endfunction
-function! s:set_indent_rule(global, rule)
-  if (!empty(get(s:indent_rules, a:rule, '')))
-    execute 'set' . (a:global ? '' : 'local') s:indent_rules[a:rule]
-  endif
-  set et? ts? sts? sw?
-endfunction
-
 AutoCmd BufReadPost * if &modifiable && !search('[^\x00-\x7F]', 'cnw') | setlocal fileencoding=utf-8 | endif
 AutoCmd BufWritePre * if !isdirectory(expand('<afile>:p:h')) | call mkdir(expand('<afile>:p:h'), 'p') | endif
 
