@@ -10,11 +10,6 @@ if has('vim_starting') && isdirectory(s:plugindir)
   execute 'set runtimepath+=' . join(glob(s:plugindir . '/*', 0, 1), ',')
 endif
 
-augroup vimrc
-  autocmd!
-augroup END
-command! -bang -nargs=* AutoCmd autocmd<bang> vimrc <args>
-
 set encoding=utf-8 fileencodings=ucs-bom,iso-2022-jp,euc-jp,cp932
 set fileformat=unix fileformats=unix,dos,mac ambiwidth=double
 set shortmess& shortmess+=I visualbell t_vb=
@@ -33,39 +28,21 @@ function! StatusLine()
   return '%m%r%y %f (%{&fileencoding},%{&fileformat})%=%l/%4L,%3c'
 endfunction
 
-AutoCmd BufReadPost * if &modifiable && !search('[^\x00-\x7F]', 'cnw') | setlocal fileencoding=utf-8 | endif
-AutoCmd BufWritePre * if !isdirectory(expand('<afile>:p:h')) | call mkdir(expand('<afile>:p:h'), 'p') | endif
-
-AutoCmd TabEnter * if exists('t:cwd') | cd `=fnameescape(t:cwd)` | endif
-AutoCmd TabLeave * let t:cwd = getcwd()
+augroup vimrc
+autocmd!
+augroup END
+command! -nargs=* AutoCmd autocmd vimrc <args>
 
 AutoCmd QuickFixCmdPost vimgrep copen
 AutoCmd QuickFixCmdPost lvimgrep lopen
-
-AutoCmd BufNewFile,BufRead *.md setlocal filetype=markdown
-AutoCmd FileType * setlocal nofoldenable
-AutoCmd FileType c,cpp setlocal noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-AutoCmd FileType haskell setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4
-AutoCmd FileType text setlocal wrap noexpandtab tabstop=8 softtabstop=8 shiftwidth=8
-AutoCmd FileType vim setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
-AutoCmd FileType help call s:ft_help()
-AutoCmd FileType qf call s:ft_qf()
-
-function! s:ft_help()
-  if &l:buftype ==# 'help'
-    nnoremap <buffer> q <C-w>c
-  else
-    setlocal list tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
-    setlocal textwidth=78 colorcolumn=+1 conceallevel=0
-    AutoCmd BufLeave <buffer> setlocal colorcolumn&
-  endif
-endfunction
-
-function! s:ft_qf()
-  setlocal statusline+=\ %L
-  nnoremap <buffer> p <CR>zz<C-w>p
-  nnoremap <buffer> q <C-w>c
-endfunction
+AutoCmd BufNewFile,BufRead *.h setlocal filetype=c
+AutoCmd FileType c setlocal expandtab softtabstop=4 shiftwidth=4
+AutoCmd FileType cpp setlocal expandtab softtabstop=4 shiftwidth=4
+AutoCmd FileType haskell setlocal expandtab softtabstop=4 shiftwidth=4
+AutoCmd FileType markdown setlocal wrap
+AutoCmd FileType text setlocal wrap
+AutoCmd FileType vim setlocal expandtab softtabstop=2 shiftwidth=2
+AutoCmd FileType help nnoremap <buffer> q <C-w>c
 
 nnoremap q <Nop>
 nnoremap Q <Nop>
