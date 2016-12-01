@@ -23,19 +23,14 @@ set list listchars=tab:>\ ,trail:~
 set cmdheight=1 showcmd showmode wildmenu wildmode=list:longest
 set nobackup noswapfile noundofile
 set ignorecase smartcase nohlsearch noincsearch nowrapscan
-set tabstop=8 softtabstop=8 shiftwidth=8 expandtab shiftround autoindent smartindent
+set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab shiftround
+set autoindent smartindent
 set splitbelow splitright equalalways
-set autoread nohidden nostartofline scrolloff=3 backspace=indent,eol,start
-set laststatus=2 statusline=%!StatusLine() showtabline=2 tabline=%!TabLine()
-
-let g:vim_indent_cont = 0
+set autoread nohidden nostartofline backspace=indent,eol,start
+set laststatus=2 statusline=%!StatusLine() showtabline=0
 
 function! StatusLine()
-  return '%m%r%y %f [%{&fileencoding}:%{&fileformat}]%=%l/%4L,%3c'
-endfunction
-
-function! TabLine()
-  return '%#TabLineFill#' . fnamemodify(getcwd(), ':~') . '%=tab:' . printf('%2d/%2d', tabpagenr(), tabpagenr('$'))
+  return '%m%r%y %f (%{&fileencoding},%{&fileformat})%=%l/%4L,%3c'
 endfunction
 
 command! -nargs=1 -bang -bar -complete=file Rename saveas<bang> <args> | call delete(expand('#'))
