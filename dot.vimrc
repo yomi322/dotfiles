@@ -1,9 +1,9 @@
 scriptencoding utf-8
-set nocompatible
 language messages C
 language time C
-let $LANG = 'C'
 filetype plugin indent on
+syntax enable
+colorscheme desert
 
 let s:plugindir = expand('~/.vim_plugin')
 if has('vim_starting') && isdirectory(s:plugindir)
@@ -37,9 +37,6 @@ endfunction
 function! TabLine()
   return '%#TabLineFill#' . fnamemodify(getcwd(), ':~') . '%=tab:' . printf('%2d/%2d', tabpagenr(), tabpagenr('$'))
 endfunction
-
-syntax enable
-colorscheme desert
 
 command! -nargs=1 -bang -bar -complete=file Rename saveas<bang> <args> | call delete(expand('#'))
 
