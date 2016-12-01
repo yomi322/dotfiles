@@ -49,38 +49,12 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Y y$
-
-nnoremap <silent> ,, :<C-u>edit $MYVIMRC<CR>
-nnoremap <silent> ,. :<C-u>source $MYVIMRC<CR>
-nnoremap <silent> ,l :<C-u>source %<CR>
-
 nnoremap gm `[v`]
-onoremap gm :<C-u>normal gm<CR>
-vnoremap gm :<C-u>normal gm<CR>
 
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-
-nnoremap ,tl :<C-u>setlocal list! list?<CR>
-nnoremap ,tn :<C-u>setlocal number! number?<CR>
-nnoremap ,tp :<C-u>setlocal paste! paste?<CR>
-nnoremap ,tw :<C-u>setlocal wrap! wrap?<CR>
-nnoremap ,tc :<C-u>setlocal colorcolumn=
-nnoremap ,tf :<C-u>setfiletype<Space>
-
-nnoremap mh :<C-u>help<Space>
-nnoremap mmh :<C-u>help<Space><C-r><C-w><CR>
-nnoremap ml :<C-u>lvimgrep //j %<Left><Left><Left><Left>
-nnoremap mml :<C-u>lvimgrep /<C-r><C-w>/j %<CR>
-nnoremap mg :<C-u>lvimgrep //j **/*<Left><Left><Left><Left><Left><Left><Left>
-nnoremap mmg :<C-u>lvimgrep /<C-r><C-w>/j **/*<CR>
-
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
+nnoremap ,l :<C-u>setlocal list! list?<CR>
+nnoremap ,n :<C-u>setlocal number! number?<CR>
+nnoremap ,p :<C-u>setlocal paste! paste?<CR>
+nnoremap ,w :<C-u>setlocal wrap! wrap?<CR>
 
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
@@ -94,13 +68,10 @@ cnoremap <C-e> <End>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <C-o> <C-\>e(getcmdtype() == '/' ? '\<' . getcmdline() . '\>' : getcmdline())<CR>
+vnoremap <expr><silent> I InsertFromBlockwiseVisual('I')
+vnoremap <expr><silent> A InsertFromBlockwiseVisual('A')
 
-vnoremap <expr><silent> I <SID>niceblock('I')
-vnoremap <expr><silent> A <SID>niceblock('A')
-
-function! s:niceblock(key)
+function! InsertFromBlockwiseVisual(key)
   let mode = mode()
   if mode ==# 'v'
     return "\<C-v>" . a:key
